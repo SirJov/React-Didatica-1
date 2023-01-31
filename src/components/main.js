@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./main.css";
 import Form from "./Form";
+import Tarefas from "./Tarefas";
 
 class Main extends Component {
   state = {
@@ -91,27 +92,11 @@ class Main extends Component {
           novaTarefa={novaTarefa}
         />
 
-        <ul className="tarefas">
-          {tarefas.map((tarefa, index) => (
-            <li key={tarefa}>
-              {tarefa}
-              <div>
-                <button
-                  onClick={(e) => this.handleEdit(e, index)}
-                  className="edit"
-                >
-                  ↺
-                </button>
-                <button
-                  onClick={(e) => this.handleDelete(e, index)}
-                  className="delete"
-                >
-                  X
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <Tarefas
+          tarefas={tarefas}
+          handleEdit={this.handleEdit}
+          handleDelete={this.handleDelete}
+        />
       </div>
     );
   }
