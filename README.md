@@ -2,7 +2,7 @@
 
 
 
-  <h3 align="center"> App registro de tarefas </h3>
+  <h3 align="center"> App de anotaçoes </h3>
 
   <br>
 
