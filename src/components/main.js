@@ -1,11 +1,29 @@
 import React, { Component } from "react";
 import "./main.css";
+import Form from "./Form";
 
 class Main extends Component {
   state = {
     novaTarefa: "",
     tarefas: [],
+    index: -1,
   };
+
+  componentDidMount() {
+    const tarefas = JSON.parse(localStorage.getItem("tarefas"));
+
+    if (!tarefas) return;
+
+    this.setState({ tarefas });
+  }
+
+  componentDidUpdate(precProps, prevState) {
+    const { tarefas } = this.state;
+
+    if (tarefas === prevState.tarefas) return;
+
+    localStorage.setItem("tarefas", JSON.stringify(tarefas));
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -23,12 +41,14 @@ class Main extends Component {
         novaTarefa: "",
       });
     } else {
+      const novasTarefas = [...tarefas];
       novasTarefas[index] = novaTarefa;
+
+      this.setState({
+        tarefas: [...novasTarefas],
+        index: -1,
+      });
     }
-    this.setState({
-      tarefas: [...novasTarefas],
-      index: -1,
-    });
   };
 
   handleChange = (e) => {
@@ -38,6 +58,8 @@ class Main extends Component {
   };
 
   handleEdit = (e, index) => {
+    e.preventDefault();
+
     const { tarefas } = this.state;
 
     this.setState({
@@ -47,6 +69,7 @@ class Main extends Component {
   };
 
   handleDelete = (e, index) => {
+    e.preventDefault();
     const { tarefas } = this.state;
     const novasTarefas = [...tarefas];
     novasTarefas.splice(index, 1);
@@ -62,10 +85,11 @@ class Main extends Component {
       <div className="main">
         <h1>Nova Tarefa</h1>
 
-        <form onSubmit={this.handleSubmit} action="#" className="form">
-          <input onChange={this.handleChange} type="text" value={novaTarefa} />
-          <button type="submit">+</button>
-        </form>
+        <Form
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          novaTarefa={novaTarefa}
+        />
 
         <ul className="tarefas">
           {tarefas.map((tarefa, index) => (
