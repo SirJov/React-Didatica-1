@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./main.css";
-import Form from "./Form";
-import Tarefas from "./Tarefas";
+import Form from "../Form";
+import Tarefas from "../Tarefas";
 
-class Main extends Component {
+export default class Main extends Component {
   state = {
     novaTarefa: "",
     tarefas: [],
@@ -101,5 +101,3 @@ class Main extends Component {
     );
   }
 }
-
-export default Main;
